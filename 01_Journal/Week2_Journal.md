@@ -1,2 +1,8 @@
+# Week 2 Journal: <Setting Up>
+
+**Reading:** <Chapter 2>
+**Date:** <2026/09/05>
+
+
 ## Reflection
 This chapter introduces a lot of new information that I have spent the week struggling to wrap my head around. I finally was able to verify that each of the programs after some technical issues with the installation of 'R' and get the data. I understand how /n means a new line of text, but I'm curious how the program interprets other inherently human ways of typing, such as emojis or twitch emotes. I think those parts of the data could also tell us a lot about it, so I'm wondering what I should look for. In terms of the researcher degrees of freedom, I understand the subconscious urge to find a hypothesis to be true, or at least to matter at all. Though, I'm also curious how often these small lapses with big outcomes on scientific discovery are full intentional or not. I feel like a researcher at their core should try their upmost best to gather the most accurate and unbiased data possible. Even though I know that getting the funding and support and putting countless hours and effort to not discover anything significant is difficult, I can't imagine that it's always malicious. Regardless, it does still make sense to use code as a way of documenting decisions, because science thrives on peer-reviews and double checking. And, with public ways of sharing research code before it's even published, such as with GitHub, it seems this feature adds multiple layers of safety nets to keep the research as unbiased as possible.
