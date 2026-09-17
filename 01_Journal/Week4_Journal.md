@@ -1,1 +1,8 @@
+# Week 4 Journal: <Lit Reviews>
 
+**Reading:** <Chapter 4>
+**Date:** <2026/09/16>
+
+## Reflection
+
+From writing essays in other classes, I am most familiar with the literature review section of a research paper, but I still get very overwhelmed about all the sources, and I struggle to come to a concise research question with all the information I find. I'm hoping that organizing my sources through Zotero and specifically looking for a gap in the data will help me gather my bearings more easily. I feel like in the past I have tended to come up with a topic question I was interested in and then find only the most relevant sources tailored to that topic. It wasn't really a lit review for the sake of creating a map for new research findings, but rather a lit review to further verify claims that were already there, or to simply write my own version of a claim connecting the findings of different researchers. I am used to exploratory searching with google scholar and systematic searching, as well as using keywords. However, I haven't done much citation chaining. I feel okay with finding sources I can use, but what I'm most worried about in this portion of the project is not being able to get to saturation and figuring out a type of research gap that will truly add something useful to the mix. I'm also worried about how I will be able to efficiently sort my sources, especially because I can't quite figure out the specifics of the topic I want to do. There is a lot of stuff about marketing movies on social media, which may be helpful for background information, but it doesn't specifically have to do with movie success.
