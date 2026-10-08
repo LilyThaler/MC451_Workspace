@@ -1,0 +1,7 @@
+# Week 1 Journal: <topic>
+
+**Reading:** <Chapter 7>
+**Date:** <2026/10/08>
+
+## Reflection
+I'm having a bit of trouble connecting the information in this chapter to my specific topic idea. I understand the idea of observing and taking field notes when it's something like comments, but I was planning on measuring movie success based on box office profits. I can of course watch and familiarize myself with the movies that will be in my data set, but I'm not sure if there is another type of observation I should be doing in this scenario. One thing that I think I do need to have is definitions and parameters about what amount of a following counts as someone being a YouTuber and what amount of profits will be accepted to count a movie as successful in this context, I'm not entirely sure if that's what is supposed to go in my codebook though. For now, I am going to make sure to familiarize myself with the movies that will likely make it into my data set and I'm going to try to do research to figure out the best way to get the data of all the debut directors is. I found a Wikipedia page list of debut directors, which is a good start, but I think I'm going to see where else I can find this information. Maybe I feel this way because I have already naturally done as much immersion as I can do, but instead I feel like I'm missing something crucial. Though on the other hand, I do feel fairly prepared to build a codebook.
