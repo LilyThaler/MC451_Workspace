@@ -1,4 +1,4 @@
-# Week 1 Journal: <topic>
+# Week 7 Journal: <Structured Listening>
 
 **Reading:** <Chapter 7>
 **Date:** <2026/10/08>
