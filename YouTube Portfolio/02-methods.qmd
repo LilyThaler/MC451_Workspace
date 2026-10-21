@@ -1,0 +1,9 @@
+---
+title: "Methods"
+---
+
+Say exactly what was done, in enough detail that another researcher
+could repeat it: data provenance, the sampling procedure, the
+variable definitions from your codebook, the reliability check, and
+the wrangling steps.
+

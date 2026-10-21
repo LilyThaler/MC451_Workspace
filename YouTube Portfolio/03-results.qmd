@@ -1,0 +1,10 @@
+---
+title: "Results"
+---
+
+Report what was found, plainly and without interpretation:
+distributions, group comparisons, and the test statistic with its
+degrees of freedom, its p-value, and its effect size. Label and
+caption every figure. Use inline R for every number in the prose so
+nothing goes stale when the data changes.
+

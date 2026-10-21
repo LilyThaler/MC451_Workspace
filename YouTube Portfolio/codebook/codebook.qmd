@@ -1,0 +1,7 @@
+---
+title: "Codebook"
+---
+
+Every variable, with its conceptual definition, its operational
+definition, and its coding rules.
+

@@ -1,0 +1,9 @@
+---
+title: "Reflection"
+---
+
+One specific paragraph: what proved harder than expected, where a
+rule was ambiguous in practice, what the data could not answer, and
+what a second attempt would change. Graded on candour and precision,
+not on whether the study went well.
+

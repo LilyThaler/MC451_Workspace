@@ -1,0 +1,11 @@
+---
+title: "White Paper"
+subtitle: "Student Name | Course Code | Semester"
+---
+
+# Abstract
+
+Write this LAST. About 150 words summarising all four IMRaD sections:
+what you studied, how you studied it, what you found, and why it
+matters. Fill in your name, course code, and semester in the YAML above.
+

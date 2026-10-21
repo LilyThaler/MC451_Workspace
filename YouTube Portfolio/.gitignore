@@ -1,0 +1,9 @@
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+data/raw/
+*.csv
+!data/derived/*.csv
+_freeze/
+/.quarto/

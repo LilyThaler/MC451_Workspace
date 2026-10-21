@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "White Paper"
+  author: "Student Name"
+  chapters:
+    - index.qmd
+    - 01-introduction.qmd
+    - 02-methods.qmd
+    - 03-results.qmd
+    - 04-discussion.qmd
+    - 05-reflection.qmd
+    - references.qmd
+    - part: "Appendices"
+      chapters:
+        - codebook/codebook.qmd
+        - journals/week-01.qmd
+
+bibliography: references.bib
+csl: https://www.zotero.org/styles/apa
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
