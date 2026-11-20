@@ -1,0 +1,385 @@
+---
+title: "Describing Data worksheet"
+subtitle: "MC 451 · Chapter 12 · Part 2 of 3 of the Twitch job"
+format:
+  html:
+    embed-resources: true
+    toc: true
+execute:
+  echo: true
+---
+
+## The case
+
+You are the data analyst on a small study. Your client is the channel manager at a small creator
+agency that represents about a dozen Twitch streamers. The agency is about to pitch a sponsor on
+how engaged its streamers' chats are. Before the pitch, the manager wants three questions
+answered with data:
+
+1. Does chat in gaming channels look different from chat in non-gaming channels?
+2. Does a bigger audience change how people write?
+3. How much of chat is reaction (an emote, a cheer, a single word) and how much is commentary?
+
+**Where the job stands.** In Data Wrangling you built the table, `data/twitch_analysis.RDS`,
+with your thirty hand-coded messages inside it. The manager has not seen a number from it yet.
+
+**Your job.** Show the manager what is in the table before anything is tested: how often each
+category occurs, how long messages run, how two categories line up, and what the patterns look
+like in a chart. The manager does not read R, so every **Write:** prompt is a note to them.
+
+## Your assignment
+
+| Part | What you do | Why the client needs it |
+|---|---|---|
+| 1 | Frequency tables: count how often each category occurs | The manager sees how much of chat is gaming, large-audience, and reaction |
+| 2 | The three numbers: the mean, median, and standard deviation of message length | "How people write" becomes numbers the manager can compare |
+| 3 | The cross-tabulation: count viewer band against channel type | The manager sees whether audience size and channel type go together |
+| 4 | Three figures, each with alt text, a disclosure sentence, and an interpretation | A chart is what the manager can put in front of a sponsor |
+| Last | Explain this stage to the client, in one short paragraph | The manager gets what you found in plain language |
+
+The code sits in gray boxes called chunks, as in Data Wrangling. Work through them in order:
+
+1. Replace each blank, shown as `___`, with the code it needs.
+2. Click **Run Cell** at the top left of the gray box.
+3. Compare what R prints with **What you should see**.
+
+Where the worksheet says **Write:**, type your answer in your own words. Every task has a
+**Help** link. It opens the page that explains that task: what the blank needs, where to click,
+and what to do when R prints an error.
+
+## What to submit
+
+**75 points.** Due Friday, November 20, 11:59 PM, in Blackboard, under **Describing Data in R**.
+
+You turn in an R assignment as one ZIP file: your whole course workspace, the folder you have open in VS Code, packed into a single file. [How to make the ZIP](https://aura-lab.siue.edu/v2v-hub/guides/mc451/11-render-a-quarto-document.html#submit-your-work-as-one-zip-file). The ZIP must hold:
+
+- this worksheet, with every blank and every **Write:** filled
+- the HTML file with the same name, which you make in **Before you submit**
+- your [AI-use log](https://aura-lab.siue.edu/v2v-hub/resources/AI-use-log.docx)
+
+Rubric: [Describing Data in R rubric](https://aura-lab.siue.edu/v2v-hub/resources/rubrics/MC451-rubric-describing-data-in-r.pdf).
+
+## Setup
+
+```{r}
+#| label: setup
+library(tidyverse)     # tables and charts
+library(v2v)           # theme_v2v() and the course palette
+options(scipen = 10)  # long numbers such as timestamps print in full; p-values keep the usual form
+analysis <- read_rds("data/twitch_analysis.RDS")  # the table worksheet 1 saved
+dir.create("figures", showWarnings = FALSE)        # where every chart is saved
+analysis %>% count(reaction_only)  # your hand-coded variable made it through
+```
+
+**What you should see:** your two coded groups adding to `30`, and `NA` with `35237`.
+[Help with Setup](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#setup)
+
+## Part 1: Frequency tables
+
+### Task 1.1: Channel type
+
+A frequency table says how often each category occurs. This one is done for you as the model.
+
+```{r}
+#| label: freq-channel-type
+analysis %>%
+  count(channel_type) %>%                  # messages per category
+  mutate(percent = round(100 * n / sum(n), 1))  # and as a share of all messages
+```
+
+**What you should see:** `gaming` `31309` (88.8%), `non-gaming` `3457` (9.8%), and `NA` `501`
+(1.4%).
+[Help with Task 1.1](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-1-1)
+
+### Task 1.2: Viewer band
+
+Build the same table for `viewer_band`.
+
+```{r}
+#| label: freq-viewer-band
+analysis %>%
+  count(viewer_band) %>%
+  mutate(percent = round(100 * n / sum(n), 1))
+```
+
+**What you should see:** `small` `27766` (78.7%), `medium` `5501` (15.6%), `large` `2000` (5.7%).
+[Help with Task 1.2](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-1-2)
+
+### Task 1.3: Your hand-coded variable
+
+Only thirty messages carry a code. Keep those rows first, or the table is mostly `NA`.
+
+```{r}
+#| label: freq-reaction
+analysis %>%
+  filter(!is.na(reaction_only)) %>%  # only the thirty coded messages
+  count(reaction_only) %>%
+  mutate(percent = round(100 * n / sum(n), 1))
+```
+
+**What you should see:** two rows adding to `30`.
+[Help with Task 1.3](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-1-3)
+
+**Write:** two to three sentences for the client on the three tables: what they show, and what
+they do not. Name the numbers.
+
+These tables show that of the messages, 88.8% are from gaming channels while 9.8% are from non-gaming channels. Around half of the dataset are coded as commentary, at 16 (53.3%), while 14 of the 30 are coded as reaction (46.7%). The viewer band table shows that most of the messages are from small channels, 78.7%. Then 15.6% are from medium channels, and 5.7% from large channels. Though, these tables do not make any inferences about the data and the way they are related.
+
+## Part 2: The three numbers
+
+### Task 2.1: Message length, all messages
+
+```{r}
+#| label: length-all
+analysis %>%
+  summarize(
+    n      = sum(!is.na(message_length)),
+    mean   = mean(message_length, na.rm = TRUE),
+    median = median(message_length, na.rm = TRUE),
+    sd     = sd(message_length, na.rm = TRUE)
+  )
+```
+
+**What you should see:** `n` `35263`, `mean` `29.0`, `median` `17`, `sd` `41.2`.
+[Help with Task 2.1](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-2-1)
+
+### Task 2.2: By channel type, and by your code
+
+Fill the grouping variable, then the filter that keeps only your coded messages.
+
+```{r}
+#| label: length-by-group
+analysis %>%
+  filter(!is.na(channel_type)) %>%
+  group_by(channel_type) %>%
+  summarize(
+    n      = n(),
+    mean   = mean(message_length, na.rm = TRUE),
+    median = median(message_length, na.rm = TRUE),
+    sd     = sd(message_length, na.rm = TRUE)
+  )
+
+analysis %>%
+  filter(!is.na(reaction_only)) %>%
+  group_by(reaction_only) %>%
+
+  summarize(
+    n      = n(),
+    mean   = mean(message_length),
+    median = median(message_length),
+    sd     = sd(message_length),
+    max    = max(message_length)
+  )
+```
+
+**What you should see:** `gaming` n `31309`, mean `28.5`, median `17`, sd `38.5`; `non-gaming`
+n `3457`, mean `33.7`, median `16`, sd `60.7`. Then one row for each of your two coded groups.
+[Help with Task 2.2](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-2-2)
+
+**Write:** two to three sentences for the client. Where do the mean and the median disagree, and
+what does the gap tell you about the shape of message length?
+
+*Your answer:*
+For the commentary messages, the mean is 30.1 whole the median is 21, which are fairly close to each other. This shows that there aren't many outliers in the commentary messages, and both give a good representation of the data. The reaction messages have a mean of 15.6 and a median of 9, which is a larger gap. This shows that there are some outliers in the reaction messages, so the median is a better representation of the data. Both message types have a right-skewed distribution, but the reaction messages moreso than the commentary messages.
+
+## Part 3: The cross-tabulation
+
+### Task 3.1: Viewer band by channel type
+
+```{r}
+#| label: crosstab
+analysis %>%
+  filter(!is.na(channel_type)) %>%
+  count(viewer_band, channel_type) %>%                   # viewer band as the rows, channel type as the columns
+  pivot_wider(names_from = channel_type, values_from = n, values_fill = 0)   # one column per channel type
+```
+
+**What you should see:** three rows of counts. `small`: `25309` gaming, `2457` non-gaming.
+`medium`: `4000` and `1000`. `large`: `2000` and `0`.
+[Help with Task 3.1](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-3-1)
+
+### Task 3.2: As proportions of each band
+
+The same counts as shares of each band.
+
+```{r}
+#| label: crosstab-shares
+analysis %>%
+  filter(!is.na(channel_type)) %>%
+  count(viewer_band, channel_type) %>%
+  group_by(viewer_band) %>%                           # shares within each band, not across the table
+  mutate(share = round(n / sum(n), 3))
+```
+
+**What you should see:** non-gaming is `0.088` of the small band and `0.2` of the medium band.
+The large band has no non-gaming row.
+[Help with Task 3.2](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-3-2)
+
+**Write:** two to three sentences for the client on the cross-tabulation. What does it show, and
+what can it not show yet?
+
+*Your answer:*
+The cross-tabulation shows the highest amount of messages are from small gaming channels, with 25,309 messages (0.912 share). The medium band has 4,000 messages from gaming channels (0.08 share) versus the non-gaming channels with 1,000 messages (0.2 share). And there are only gaming channels in the large band, with 2,000 messages. This tells us that gaming channels of all sizes are more common versus non-gaming channels, but it does not yet explain why this difference exists or if it is important enough to be considered.
+
+## Part 4: Figures
+
+Each figure is built, saved to `figures/` by the code that makes it, and carries alt text you
+write on its `#| fig-alt:` line. After each one, **Write:** one sentence disclosing a choice you
+made in it (a cap on an axis, which categories you kept, a bin width), and two to three
+sentences of interpretation for the client.
+
+### Task 4.1: Channel type within each viewer band
+
+A proportion bar chart of the cross-tabulation. Fill the fill aesthetic and the position that
+makes every bar the same height.
+
+```{r}
+#| label: fig-band-type
+#| fig-alt: "YOUR TURN: one sentence saying what this chart shows."
+fig_band_type <- analysis %>%
+  filter(!is.na(channel_type)) %>%
+  ggplot(aes(x = viewer_band, fill = channel_type)) +
+  geom_bar(position = "fill") +                        # every bar scaled to 100%
+  scale_y_continuous(labels = scales::percent_format()) +
+  scale_fill_v2v() +
+  labs(title   = "Channel type within each viewer band",
+       x       = "Viewer band (channel's median viewers)",
+       y       = "Share of messages",
+       fill    = "Channel type",
+       caption = "Source: v2v Twitch corpus, November 18 to 24, 2018. 501 messages with no channel type left out.") +
+  theme_v2v()
+
+fig_band_type
+ggsave("figures/band-by-type.png", fig_band_type, width = 7, height = 4.5, dpi = 300)
+```
+
+**What you should see:** three bars of equal height, and `band-by-type.png` in `figures/`.
+[Help with Task 4.1](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-4-1)
+
+**Write:** the disclosure sentence, then two to three sentences of interpretation.
+
+*Your answer:*
+This chart shows the percentage shares of messages depending on channel type and sorted by viewer band. Since no large non-gaming channels are in the dataset, the Large band is 100% gaming. The medium band has the highest percentage of non-gaming channels at 20% while the small band has only 8.8%. Still, the gaming channels dominate every band.
+
+### Task 4.2: Message length by your code
+
+The thirty coded messages, as a boxplot. Fill the variable on the x axis and the geom.
+
+```{r}
+#| label: fig-length-reaction
+#| fig-alt: "YOUR TURN: one sentence saying what this chart shows."
+fig_length_reaction <- analysis %>%
+  filter(!is.na(reaction_only)) %>%
+  ggplot(aes(x = reaction_only, y = message_length)) +
+  geom_boxplot(outlier.shape = NA) +   # no outlier dots here; the points below show every message
+  geom_jitter(width = 0.15, alpha = 0.6) +   # every one of the thirty, shown as a point
+  labs(title   = "Message length by message type",
+       x       = "Hand-coded message type",
+       y       = "Characters",
+       caption = "Source: 30 hand-coded messages, 15 each from bobross and giantwaffle.") +
+  theme_v2v()
+
+fig_length_reaction
+ggsave("figures/length-by-reaction.png", fig_length_reaction, width = 6, height = 4.5, dpi = 300)
+```
+
+**What you should see:** two boxes, and `length-by-reaction.png` in `figures/`.
+[Help with Task 4.2](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-4-2)
+
+**Write:** the disclosure sentence, then two to three sentences of interpretation.
+
+*Your answer:*
+This chart shows how message type, wether commentary or reaction, connect to the length of the message. The commentary messages tend to have a higher message length than the reaction messages do, and more extreme outliers. The reaction messages have fevwer extreme outliers, and the median is lower than that of the commentary messages. This makes sense because reaction messages are coded as such when they are a single word or cheer, while commentary messages are coded as such if there are more than two words.
+
+### Task 4.3: A figure of your own choice
+
+Choose the variable and the chart, and let the R Companion write it. Then fill in its title, axis
+labels, and caption, and keep the `fig_own <-` and `ggsave()` lines so the figure is saved.
+[Help with Task 4.3](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#task-4-3)
+
+```{r}
+#| label: fig-own
+#| fig-alt: "YOUR TURN: one sentence saying what this chart shows."
+fig_own <- analysis %>%
+filter(message_length <= 200) %>%
+  ggplot(aes(x = message_length)) +
+  geom_histogram(binwidth = 5) +
+  # Write the counts with commas (12,000), not 12000.
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Message length",
+    subtitle = "Messages up to 200 characters",
+    x = "Characters per message",
+    y = "Messages",
+    caption = "Source: v2v package, November 2018 Twitch collection",
+    alt = "YOUR TURN: one sentence saying what the chart shows, for a reader who cannot see it."
+  ) +
+  v2v::theme_v2v()
+
+# Save the chart to a picture file in your figures folder.
+dir.create("figures", showWarnings = FALSE)
+ggsave("figures/message-length-histogram.png", width = 7, height = 5)
+
+fig_own
+ggsave("figures/own-choice.png", fig_own, width = 7, height = 4.5, dpi = 300)
+```
+
+**Write:** one sentence on why you chose this chart for this variable, the disclosure sentence,
+and two to three sentences of interpretation.
+
+
+```{r}
+#| fig-alt: "YOUR TURN: the same one sentence as alt in labs() below."
+# ---- Histogram: how one number is spread out ----
+# Each bar counts the messages whose length falls in a 5-character band. Lengths over 200
+# are dropped from the picture only, so the long tail does not squash the bars.
+analysis %>%
+  filter(message_length <= 200) %>%
+  ggplot(aes(x = message_length)) +
+  geom_histogram(binwidth = 5) +
+  # Write the counts with commas (12,000), not 12000.
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Message length",
+    subtitle = "Messages up to 200 characters",
+    x = "Characters per message",
+    y = "Messages",
+    caption = "Source: v2v package, November 2018 Twitch collection",
+    alt = "YOUR TURN: one sentence saying what the chart shows, for a reader who cannot see it."
+  ) +
+  v2v::theme_v2v()
+
+# Save the chart to a picture file in your figures folder.
+dir.create("figures", showWarnings = FALSE)
+ggsave("figures/message-length-histogram.png", width = 7, height = 5)
+```
+
+
+*Your answer:*
+
+*Your answer:*
+
+I noticed some big outliers in message length, so I wanted a different visual for how they are distributed, which has given a very interesting result. The majority of the messages are under 50 characters, and there is a big spike at around 10 characters, with 8,000 messages falling into that range. Though many are not under that range either. I think this makes sense because many messages are just a few words, so they would fall into a shorter amount of characters without being only one or two. Longer messages are also likely not as common because twitch chats move so quickly and are live, so it is harder for a longer message to stay relevant by the time it is sent, and it is harder for others to read and reply to it.
+
+
+## Explain this stage to the client
+
+**Write:** one short paragraph, in plain language, that you would send to the channel manager.
+Say what you did at this stage (what you counted, measured, and charted), what it shows about
+the three questions they asked, and what it does not show yet: a description says how the
+numbers sit, not whether a difference is bigger than chance, and that is worksheet 3. No R, no
+column names, no jargon the manager would have to look up. Name the numbers that matter to
+them.
+
+*Your paragraph:*
+At this stage I counted and compared the number of messages between gaming and non-gaming channels, the number of messages between small, medium, and large channels, and the number of messages coded as commentary versus reaction. I also measured message length compared to these factors. I found that gaming channels are both more common and have more messages in the dataset. The amount if commentary versus reaction messages is about even, with a larger variety of message lengths in the commentary messages. The highest messages are from small gaming channels with 25,309 messages. This does not yet show if these differences are big enough to matter, though I can infer that some differences, while not all, will probably tell us something significant.
+
+## Before you submit
+
+- [ ] No `___` and no `YOUR TURN` is left anywhere in the file.
+- [ ] Every figure has its own alt text, a disclosure sentence, and an interpretation.
+- [ ] `figures/` holds the three saved charts.
+- [ ] The paragraph to the client is written, and it names what this stage does not show yet.
+- [ ] The worksheet renders without an error.
+
+[Help with rendering and submitting](https://aura-lab.siue.edu/v2v-hub/resources/help/describing-data.html#before-you-submit)
