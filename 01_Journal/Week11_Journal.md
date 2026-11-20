@@ -1,0 +1,7 @@
+# Week 11 Journal: <Structured Listening>
+
+**Reading:** <Chapter 11>
+**Date:** <2026/11/7>
+
+## Reflection
+The Unix Epoch way of dating things is definitely something I need to get used to, and the way I'm supposed to convert it makes it seem complicated, but thankfully, I don't need extremely specific dates, not days or times, just years, so that might make it a little simpler. I understand having to do this and the idea of labeling the different, I'll probably have to label the data between YouTuber movies and non-YouTuber, which shouldn't be too difficult because I have a column for that already, which has a 1 or 0 depending on YouTuber status. For coding my hand-coded variable, which is a 0 through 2 depending on if the Letterboxd reviews actually tell their thoughts on the movie or mention the director in some way. After doing the pilot, I know that my codebook works well, and I'm not worried about the hand-coding taking up any unnecessary time. I'm much more worried about the data wrangling. And I don't really understand the reason for some of it besides organizing the data, which is what I feel like I've already done in my spreadsheet. Though maybe that means that the data wrangling process will go smoothly for me. To be honest, I've had issues with every VSCode based part of this semester, and it's not something that I'm particularly good at understanding or figuring out, it can be very frustrating. I'm nervous that I'll get too far into the project and I've missed a vital step, though I've gotten this far.

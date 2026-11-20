@@ -1,0 +1,7 @@
+# Week 9 Journal: <Structured Listening>
+
+**Reading:** <Chapter 9>
+**Date:** <2026/10/23>
+
+## Reflection
+I am so incredibly confused. I have added the workspace and I understand its place in keeping all of the project organized and in the same place, and I understand the reasoning for the codebook but wrapping my head around actually making it sounds stressful to me. And I'm not sure how actually physically put the data into the rules of the codebook. Right now, I have four variables, three of which I just need to look up. So, my codebook is mostly going to revolve around the Letterboxd reviews, specifically the three top reviews for each movie in my dataset, when sorted by most popular on Letterboxd. This way, I have over 50 pieces of specifically coded data that isn't just a lookup. I had some issues with finalizing my definitions so I think that refining the definitions practice first will help create a solid base for my codebook. I'm also going to end up adding another variable to account for how to find if a director is a YouTuber and write the rules for when someone counts as a famous YouTuber, though I don't quite know how I go about that. It is clear that the codebook is a very important part of building the project, which is why I want to make sure that I get it completely right, and I feel like there is so much going on that I don't feel confident that I'm going to get it right. The codebook examples given are helpful though.

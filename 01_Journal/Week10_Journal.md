@@ -1,0 +1,7 @@
+# Week 10 Journal: <Structured Listening>
+
+**Reading:** <Chapter 10>
+**Date:** <2026/10/30>
+
+## Reflection
+It took me a moment to figure out how I wanted to get the sample of my data, and I decided to code two of the reviews from every third movie in my dataset. So, the first, fifth, eighth, eleventh, fourteenth, and seventeenth, with a total of 12 pieces of data in the sample, out of the total dataset being 64. Thankfully, this sample size gave me multiple examples of all three of my values for the Letterboxd review variable. I'm going to hide the first pass and wait over the weekend, then I'll follow my codebook and code the same sample for the second pass. After this, I'll put my findings in VSCode so that I can run Cohen's kappa, which I think would be the better formula to run in this case because my main code, my fifth variable, is nominal. If the check comes back as under .7, I will revise the codebook until it is more consistent. I do feel better about this assignment than I did last week because writing up all of the rules in the codebook to easily reference and coding my sample has made me feel more confident about the coding that I will have to do later. I'm still nervous though about having to figure out how to actually use R to run my data, I feel like there is a lot of things that can go wrong and I feel like finding the solution to them will be more difficult than the writing and research portion, which I am more familiar with.
